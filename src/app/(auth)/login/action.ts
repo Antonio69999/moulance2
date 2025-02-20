@@ -8,18 +8,35 @@ import { createClient } from "@/utils/supabase/server";
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+  console.log("=== LOGIN PROCESS STARTING ===");
+
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  console.log("Attempting login for email:", data.email);
+
+  const { error, data: authData } = await supabase.auth.signInWithPassword(
+    data
+  );
 
   if (error) {
+    console.error("Login error:", error);
     throw new Error("Email ou mot de passe incorrect");
   }
+
+  console.log("Login successful!");
+  console.log("Auth data:", authData);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  console.log("Current user session:", {
+    id: user?.id,
+    email: user?.email,
+    role: user?.role,
+  });
 
   revalidatePath("/", "layout");
   redirect("/dashboard");
@@ -58,11 +75,29 @@ export async function signup(formData: FormData) {
 
 export async function logout() {
   const supabase = await createClient();
+
+  console.log("=== LOGOUT PROCESS STARTING ===");
+
+  const beforeLogout = await supabase.auth.getUser();
+  console.log("User before logout:", {
+    id: beforeLogout.data.user?.id,
+    email: beforeLogout.data.user?.email,
+  });
+
   const { error } = await supabase.auth.signOut();
 
   if (error) {
+    console.error("Logout error:", error);
     throw new Error("Une erreur est survenue lors de la déconnexion");
   }
+
+  console.log("Signout successful!");
+
+  const afterLogout = await supabase.auth.getUser();
+  console.log("User after logout:", afterLogout.data.user);
+
+  // Increase delay to make sure we see the logs
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   revalidatePath("/", "layout");
   redirect("/login");
