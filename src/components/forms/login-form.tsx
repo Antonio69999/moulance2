@@ -12,20 +12,39 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { login, signup } from "@/app/(auth)/login/action";
+import { login } from "@/app/(auth)/login/action";
+import { useState } from "react";
 
-export function LoginForm() {
+export function LoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleLogin(formData: FormData) {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await login(formData);
+      // If we get here, the login was successful
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "La connexion a échoué");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <div className={cn("flex flex-col gap-6")}>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl text-rose-500">Connexion</CardTitle>
-          <CardDescription>
-            Entrer votre nom d'utilisateur ci-dessous
-          </CardDescription>
+          <CardDescription>Entrer votre email ci-dessous</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={handleLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -49,25 +68,16 @@ export function LoginForm() {
                 </div>
                 <Input id="password" name="password" type="password" required />
               </div>
-              <input type="hidden" name="redirectTo" />
+              {error && <p className="text-red-500">{error}</p>}
               <Button
                 type="submit"
-                formAction={login}
                 className="w-full bg-rose-500 hover:bg-rose-100 hover:text-rose-500 text-white text-lg"
               >
-                Let's go
+                {isLoading ? "Chargement..." : "Let&apos;s go"}
               </Button>
-
-              <div
-                className="flex h-8 items-end space-x-1"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                <p className="text-sm text-red-500"></p>
-              </div>
             </div>
             <div className="mt-4 text-center text-sm">
-              Vous n'avez pas de compte ?{" "}
+              Vous n&apos;avez pas de compte ?{" "}
               <Link
                 href="/register"
                 className="underline underline-offset-4 decoration-rose-400"

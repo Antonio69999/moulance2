@@ -44,7 +44,7 @@ export function RegisterForm({
         <CardHeader>
           <CardTitle className="text-2xl text-rose-500">Inscription</CardTitle>
           <CardDescription>
-            Entrer votre nom d'utilisateur ci-dessous
+            Entrer votre email ci-dessous
           </CardDescription>
         </CardHeader>
         <CardContent>
