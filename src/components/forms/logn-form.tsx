@@ -57,14 +57,6 @@ export function LoginForm() {
               >
                 Let's go
               </Button>
-              <Button
-                type="button"
-                formAction={signup}
-                variant="outline"
-                className="w-full"
-              >
-                Sign up
-              </Button>
 
               <div
                 className="flex h-8 items-end space-x-1"

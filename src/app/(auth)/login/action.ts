@@ -18,11 +18,11 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/error");
+    throw new Error("Email ou mot de passe incorrect");
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
@@ -53,5 +53,17 @@ export async function signup(formData: FormData) {
     throw new Error(error.message);
   }
 
+  redirect("/login");
+}
+
+export async function logout() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error("Une erreur est survenue lors de la déconnexion");
+  }
+
+  revalidatePath("/", "layout");
   redirect("/login");
 }
