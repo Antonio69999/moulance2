@@ -27,13 +27,11 @@ export function RegisterForm({
     setError(null);
 
     try {
-      const result = await signup(formData);
+      await signup(formData);
       // If we get here, the signup was successful
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "L'inscription a échoué. Veuillez réessayer."
+        err instanceof Error ? err.message : "L&apos;inscription a échoué"
       );
     } finally {
       setIsLoading(false);
@@ -80,7 +78,7 @@ export function RegisterForm({
                 formAction={signup}
                 className="w-full bg-rose-500 hover:bg-rose-100 hover:text-rose-500 text-white text-lg"
               >
-                Inscription
+                {isLoading ? "Chargement" : "Inscription"}
               </Button>
               <Button variant="outline" className="w-full">
                 Inscription avec Github
