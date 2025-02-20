@@ -73,7 +73,7 @@ export function LoginForm({
                 type="submit"
                 className="w-full bg-rose-500 hover:bg-rose-100 hover:text-rose-500 text-white text-lg"
               >
-                {isLoading ? "Chargement..." : "Let&apos;s go"}
+                {isLoading ? "Chargement..." : "Let's go"}{" "}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

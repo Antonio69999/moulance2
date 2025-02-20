@@ -64,7 +64,7 @@ export default function Layout({ children }: LayoutProps) {
               className="flex items-center text-gray-600 hover:text-red-500 py-4 transition-all duration-300 hover:translate-x-1"
             >
               <OutlineIcons.AdjustmentsHorizontalIcon className="h-5 w-5 mr-2" />
-              Some menu item
+              Ajouter une dépense
               <span className="ml-auto">›</span>
             </Link>
             <Link
@@ -72,7 +72,7 @@ export default function Layout({ children }: LayoutProps) {
               className="flex items-center text-gray-600 hover:text-red-500 py-4 transition-all duration-300 hover:translate-x-1"
             >
               <OutlineIcons.DocumentIcon className="h-5 w-5 mr-2" />
-              Another menu item
+              Mes dépenses
               <span className="ml-auto">›</span>
             </Link>
           </div>
