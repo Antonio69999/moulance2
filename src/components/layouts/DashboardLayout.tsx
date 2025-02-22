@@ -56,7 +56,7 @@ export function DashboardLayout({
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
       <div
-        className={`overlay fixed inset-0 bg-pink-400/50 z-40 ${
+        className={`overlay fixed inset-0 ${
           isSidebarOpen ? "opacity-100" : "opacity-0 hidden"
         } transition-opacity duration-300`}
         onClick={toggleSidebar}
@@ -65,7 +65,7 @@ export function DashboardLayout({
       <header className="fixed w-full bg-white text-red-500 z-50 shadow-lg animate-slide-down">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between h-16">
           <button
-            className="mobile-menu-button p-2 lg:hidden"
+            className="mobile-menu-button p-2 lg:hidden bg-red-500 text-white"
             onClick={toggleSidebar}
           >
             <OutlineIcons.Bars3Icon />
@@ -104,6 +104,14 @@ export function DashboardLayout({
                 <span className="ml-auto">›</span>
               </Link>
               <Link
+                href="/category/addCategories"
+                className="flex items-center text-gray-600 hover:text-red-500 py-4 transition-all duration-300 hover:translate-x-1"
+              >
+                <OutlineIcons.PlusIcon className="h-5 w-5 mr-2" />
+                Ajouter une catégorie
+                <span className="ml-auto">›</span>
+              </Link>
+              <Link
                 href="/expense/view"
                 className="flex items-center text-gray-600 hover:text-red-500 py-4 transition-all duration-300 hover:translate-x-1"
               >
@@ -123,7 +131,7 @@ export function DashboardLayout({
                 <span className="ml-auto">›</span>
               </Link>
               <Link
-                href="#"
+                href="/"
                 className="flex items-center text-gray-600 hover:text-red-500 py-4 transition-all duration-300 hover:translate-x-1"
               >
                 <OutlineIcons.Cog6ToothIcon className="h-5 w-5 mr-2" />
